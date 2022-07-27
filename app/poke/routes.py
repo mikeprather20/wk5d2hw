@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, request
 from .forms import pokemonForm
 
 
@@ -10,8 +10,7 @@ poke = Blueprint('poke', __name__, template_folder='poke_template')
 def pokedex(pokemon):
     form = pokemonForm()
     if request.method == "POST":
-        if form.validate():
-            pokemon =='pokemon'
+        pokemon =='pokemon'
         url = f'https://pokeapi.co/api/v2/pokemon/{pokemon}'
         response = requests.get(url)
         data = response.json()

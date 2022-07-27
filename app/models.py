@@ -2,16 +2,16 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+# class Post(db.Model):
+#     pokemon = db.Column(db.String(50), nullable=False, unique=True)
+#     post = db.relationship("Post", backref='author', lazy=True)
+
+#     def __init__(self, pokemon):
+#         self.pokemon = pokemon
+
+
+
 class Pokemon(db.Model):
-    pokemon = db.Column(db.String(50), nullable=False, unique=True)
-    post = db.relationship("Post", backref='author', lazy=True)
-
-    def __init__(self, pokemon):
-        self.pokemon = pokemon
-
-
-
-class Post(db.Model):
     name = db.Column(db.String(50), primary_key=True)
     hp_stat = db.Column(db.Integer)
     def_stat = db.Column(db.Integer)
