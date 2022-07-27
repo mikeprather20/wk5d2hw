@@ -1,30 +1,31 @@
-from flask import Blueprint, request
+from flask import Blueprint, render_template, request
 from .forms import pokemonForm
 
 
 from app.models import Pokemon
 
 poke = Blueprint('poke', __name__, template_folder='poke_template')
-
+import requests
 @poke.route('/pokemon', methods=["GET", "POST"])
 def pokedex(pokemon):
-    form = pokemonForm()
+
     if request.method == "POST":
-        pokemon =='pokemon'
-        url = f'https://pokeapi.co/api/v2/pokemon/{pokemon}'
-        response = requests.get(url)
-        data = response.json()
-        pokemon_info = []
-        pokedex = {
-        'Name' : data['forms'][0]['name'].title(),
-        'Ability' : data['abilities'][0]['ability']['name'].title(),
-        'Image' : data['sprites']['front_shiny'],
-        'ATK Stat' : data['stats'][0]['base_stat'],
-        'HP Stat' : data['stats'][1]['base_stat'],
-        'DEF Stat' : data['stats'][2]['base_stat']
+        poke_name = form.name.data
+
+        url = f"https://pokeapi.co/api/v2/pokemon/{poke_name}"
+        res = requests.get(url)
+        if res.ok:
+            data = res.json()
+            my_dict = {
+            'name': data['name'],
+            'ability': data['abilities'][0]['ability']['name'],
+            'img_url': data['sprites']['front_shiny'],
+            "hp": data['stats'][0]['base_stat'],
+            'attack': data['stats'][1]['base_stat'],
+            'defense': data['stats'][2]['base_stat']
         }
-        requests.get(f'pokeapi.co/v1/pokemon/{pokemon}')
-        pokemon_info.append(pokedex)
-        return pokemon_info
+        return my_dict
     else:
-        return
+        return "Error"
+
+    return render_template('pokemon.hml', form = form)

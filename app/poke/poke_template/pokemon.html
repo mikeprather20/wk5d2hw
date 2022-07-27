@@ -8,10 +8,21 @@
 <form class="container" method="POST">
 
     {{ form.hidden_tag() }}
-    {{ form.pokemon(class='form-control', placeholder='Poke'mon Name') }}
+
+    {{ form.name(class='form-control', placeholder='Pokemon Name') }}
     {{ form.submit(class='btn btn-primary') }}
 
 </form>
+
+<div class="card" style="width: 18rem;">
+  <img src="{{ pokemon.img_url }}}}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{ pokemon.name }}}}</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+</div>
+
+
 
 <br>
 <ul class="nav">
