@@ -1,4 +1,3 @@
-#from app import app
 from flask import Blueprint, render_template, request
 from .forms import pokemonForm
 import requests
@@ -11,7 +10,7 @@ poke = Blueprint('poke', __name__, template_folder='poke_template')
 
 @poke.route('/pokemon', methods = ['GET', 'POST'])
 def pokedex():
-    form = pokemonForm
+    form = pokemonForm()
     my_dict = {}
 
     if request.method == "POST":
@@ -32,4 +31,4 @@ def pokedex():
         else:
             return "ERROR"
 
-    return render_template('pokemon.hml', form = form, pokemon = my_dict)
+    return render_template('pokemon.html', form = form, pokemon = my_dict)
