@@ -1,13 +1,18 @@
+#from app import app
 from flask import Blueprint, render_template, request
 from .forms import pokemonForm
+import requests
 
-
-from app.models import Pokemon
+#from app.models import Pokemon
 
 poke = Blueprint('poke', __name__, template_folder='poke_template')
-import requests
-@poke.route('/pokemon', methods=["GET", "POST"])
-def pokedex(pokemon):
+
+
+
+@poke.route('/pokemon', methods = ['GET', 'POST'])
+def pokedex():
+    form = pokemonForm
+    my_dict = {}
 
     if request.method == "POST":
         poke_name = form.name.data
@@ -17,15 +22,14 @@ def pokedex(pokemon):
         if res.ok:
             data = res.json()
             my_dict = {
-            'name': data['name'],
-            'ability': data['abilities'][0]['ability']['name'],
-            'img_url': data['sprites']['front_shiny'],
-            "hp": data['stats'][0]['base_stat'],
-            'attack': data['stats'][1]['base_stat'],
-            'defense': data['stats'][2]['base_stat']
-        }
-        return my_dict
-    else:
-        return "Error"
+                'name': data['name'],
+                'ability': data['abilities'][0]['ability']['name'],
+                'img_url': data['sprites']['front_shiny'],
+                'hp': data['stats'][0]['base_stat'],
+                'attack': data['stats'][1]['base_stat'],
+                'defense': data['stats'][2]['base_stat']
+            }
+        else:
+            return "ERROR"
 
-    return render_template('pokemon.hml', form = form)
+    return render_template('pokemon.hml', form = form, pokemon = my_dict)
